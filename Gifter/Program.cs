@@ -1,3 +1,5 @@
+using Gifter.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +8,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository > ();
 
 var app = builder.Build();
 
