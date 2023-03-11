@@ -42,6 +42,68 @@ public class UserProfileRepository : BaseRepository, IUserProfileRepository
         }
     }
 
+    public List<UserProfile> GetAllWithPosts()
+    {
+        using (var conn = Connection)
+        {
+            conn.Open();
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT 
+                                    up.Id AS UserProfileId,
+                                    up.[Name],
+                                    up.Email,
+                                    up.ImageUrl,
+                                    up.Bio,
+                                    up.DateCreated AS UserDateCreated,
+                                    p.Id as PostId,
+                                    p.Title,
+                                    p.ImageUrl AS postImageUrl,
+                                    p.Caption,
+                                    p.DateCreated AS PostDateCreated
+                                    FROM UserProfile up
+                                    LEFT JOIN Post p
+                                    ON p.UserProfileId = up.Id";
+                var reader = cmd.ExecuteReader();
+                var profiles = new List<UserProfile>();
+                while (reader.Read())
+                {   
+                    int userProfileId = DbUtils.GetInt(reader, "UserProfileId");
+                    var existingUser = profiles.FirstOrDefault(u => u.Id == userProfileId);
+                    if (existingUser == null) 
+                    {
+
+                        existingUser = new UserProfile()
+                        {
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                            Bio = DbUtils.GetString(reader, "Bio"),
+                            DateCreated = DbUtils.GetDateTime(reader, "UserDateCreated"),
+                            Posts = new List<Post>()
+
+                    };
+                        profiles.Add(existingUser);
+                    }
+
+                    if (DbUtils.IsNotDbNull(reader, "PostId"))
+                    {
+                        existingUser.Posts.Add(new Post()
+                        {
+                            Id = DbUtils.GetInt(reader, "PostId"),
+                            Title = DbUtils.GetString(reader, "Title"),
+                            Caption = DbUtils.GetString(reader, "Caption"),
+                            DateCreated = DbUtils.GetDateTime(reader, "PostDateCreated"),
+                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId")
+                        });
+                    }
+                }
+                reader.Close();
+                return profiles;
+            }
+        }
+    }
+
     public UserProfile GetById(int id)
     {
         using (var conn = Connection)
