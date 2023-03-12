@@ -2,6 +2,8 @@
 using Gifter.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gifter.Controllers;
 
@@ -39,6 +41,19 @@ public UserProfileController(IUserProfileRepository userProfileRepository)
     {
         return Ok(_userProfileRepository.GetAllWithPosts());
     }
+    [HttpGet("WithPostsAndComments")]
+    public IActionResult GetAllWithPostsAndComments()
+    {
+        var result = _userProfileRepository.GetAllWithPostsAndComments();
+        //ignore null values for endpoint
+        return new JsonResult(result, new JsonSerializerOptions()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+
+        });
+     
+    }
+
 
     [HttpPost]
     public IActionResult Post(UserProfile userProfile)
