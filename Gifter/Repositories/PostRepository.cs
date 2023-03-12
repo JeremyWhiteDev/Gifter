@@ -118,6 +118,8 @@ public class PostRepository : BaseRepository, IPostRepository
                             UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
                         });
                     }
+
+             
                 }
 
                 reader.Close();

@@ -22,5 +22,5 @@ public class Post
 
     public UserProfile? UserProfile { get; set; } = null;
 
-    public List<Comment>? Comments { get; set; } = null;
+    public List<Comment>? Comments { get; set; } = new List<Comment>();
 }

@@ -11,6 +11,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository > ();
 
+//Hide null values globally 
+//builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
