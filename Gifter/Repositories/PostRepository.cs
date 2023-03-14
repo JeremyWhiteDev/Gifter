@@ -277,7 +277,6 @@ public class PostRepository : BaseRepository, IPostRepository
                                ImageUrl = @ImageUrl,
                                UserProfileId = @UserProfileId
                          WHERE Id = @Id";
-
                 DbUtils.AddParameter(cmd, "@Title", post.Title);
                 DbUtils.AddParameter(cmd, "@Caption", post.Caption);
                 DbUtils.AddParameter(cmd, "@ImageUrl", post.ImageUrl);

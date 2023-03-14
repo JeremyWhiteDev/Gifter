@@ -10,9 +10,9 @@ public class Post
     public string Title { get; set; }
 
     [Required]
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; set; } = null;
 
-    public string Caption { get; set; }
+    public string Caption { get; set; } = null;
 
     [Required]
     public DateTime DateCreated { get; set; }

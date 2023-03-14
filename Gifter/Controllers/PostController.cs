@@ -52,12 +52,12 @@ public class PostController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, Post post)
     {
-        if (id != post.Id)
-        {
-            return BadRequest();
-        }
+        //if (id != post.Id)
+        //{
+        //    return BadRequest();
+        //}
 
-        _postRepository.Update(post);
+        _auditingPostRepository.Update(post);
         return NoContent();
     }
 
