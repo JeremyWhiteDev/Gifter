@@ -10,9 +10,12 @@ namespace Gifter.Controllers;
 public class PostController : ControllerBase
 {
     private readonly IPostRepository _postRepository;
-    public PostController(IPostRepository postRepository)
+
+    private readonly IAuditingPostRepository _auditingPostRepository;
+    public PostController(IPostRepository postRepository, IAuditingPostRepository auditingPostRepository)
     {
         _postRepository = postRepository;
+        _auditingPostRepository = auditingPostRepository;
     }
 
     [HttpGet]
@@ -61,7 +64,7 @@ public class PostController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        _postRepository.Delete(id);
+        _auditingPostRepository.Delete(id);
         return NoContent();
     }
 }

@@ -23,4 +23,9 @@ public class Post
     public UserProfile? UserProfile { get; set; } = null;
 
     public List<Comment>? Comments { get; set; } = new List<Comment>();
+
+    public override string ToString()
+    {
+        return $"Id: {Id}, Title: {Title}, ImageUrl: {ImageUrl}, Caption: {Caption}, DateCreated: {DateCreated}, UserProfileId: {UserProfileId}";
+    }
 }

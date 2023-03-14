@@ -19,5 +19,5 @@ public class UserProfile
     [Required]
     public DateTime DateCreated { get; set; }
 
-    public List<Post>? Posts { get; set; }
+    public List<Post>? Posts { get; set; } = new List<Post>();
 }

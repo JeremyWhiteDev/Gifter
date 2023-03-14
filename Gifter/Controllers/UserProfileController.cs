@@ -49,7 +49,6 @@ public UserProfileController(IUserProfileRepository userProfileRepository)
         return new JsonResult(result, new JsonSerializerOptions()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-
         });
      
     }

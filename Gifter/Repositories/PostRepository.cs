@@ -136,9 +136,11 @@ public class PostRepository : BaseRepository, IPostRepository
             using (var cmd = conn.CreateCommand())
             {
                 cmd.CommandText = @"
-                          SELECT Title, Caption, DateCreated, ImageUrl, UserProfileId
+                          SELECT Title, Caption, Post.DateCreated, Post.ImageUrl, UserProfileId, Name, Email, up.DateCreated AS UserProfileDateCreated, up.ImageUrl AS UserProfileImageUrl
                             FROM Post
-                           WHERE Id = @Id";
+                            LEFT JOIN UserProfile up
+                            ON up.Id = UserProfileId
+                           WHERE Post.Id = @Id";
 
                 DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -272,14 +274,12 @@ public class PostRepository : BaseRepository, IPostRepository
                         UPDATE Post
                            SET Title = @Title,
                                Caption = @Caption,
-                               DateCreated = @DateCreated,
                                ImageUrl = @ImageUrl,
                                UserProfileId = @UserProfileId
                          WHERE Id = @Id";
 
                 DbUtils.AddParameter(cmd, "@Title", post.Title);
                 DbUtils.AddParameter(cmd, "@Caption", post.Caption);
-                DbUtils.AddParameter(cmd, "@DateCreated", post.DateCreated);
                 DbUtils.AddParameter(cmd, "@ImageUrl", post.ImageUrl);
                 DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
                 DbUtils.AddParameter(cmd, "@Id", post.Id);

@@ -10,6 +10,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
 builder.Services.AddTransient<IUserProfileRepository, UserProfileRepository > ();
+builder.Services.AddTransient<IAuditingPostRepository, AuditingPostRepository>();
+builder.Services.AddTransient<IAuditRepository, AuditRepository>();
 
 //Hide null values globally 
 //builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
